@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manar Alaa — Software Engineer, Backend (Node.js)</title>
+<meta name="description" content="Manar Alaa is a Software Engineer with nearly three years of experience building scalable backend systems and RESTful APIs with Node.js, Express, TypeScript and MongoDB, including real-time and third-party integrations.">
+<meta name="keywords" content="Software Engineer, Node.js Developer, Backend Engineer, TypeScript Developer, Node.js Backend Developer">
+<meta property="og:title" content="Manar Alaa — Software Engineer, Backend (Node.js)">
+<meta property="og:description" content="Backend systems, RESTful APIs and real-time services built with Node.js, Express, TypeScript and MongoDB.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #0E1113;
+    --ink-panel: #161B1E;
+    --ink-panel-2: #1C2226;
+    --line: #2B3236;
+    --line-soft: #21282B;
+    --text: #ECEDEE;
+    --text-dim: #9BA5AA;
+    --text-faint: #6C767B;
+    --amber: #C99A4A;
+    --amber-dim: #C99A4A99;
+    --teal: #55A8A2;
+    --teal-dim: #55A8A299;
+    --radius: 3px;
+    --maxw: 900px;
+    --sidebar-w: 300px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text);
+    font-family:'Inter', -apple-system, sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,h4{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    margin:0;
+    color:var(--text);
+    letter-spacing:-0.01em;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  ul{ margin:0; padding:0; list-style:none; }
+  p{ margin:0; }
+
+  ::selection{ background:var(--amber); color:#14181A; }
+
+  :focus-visible{
+    outline:2px solid var(--amber);
+    outline-offset:3px;
+  }
+
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+
+  /* ---------- layout shell ---------- */
+  .shell{
+    display:flex;
+    min-height:100vh;
+  }
+
+  .sidebar{
+    width:var(--sidebar-w);
+    flex-shrink:0;
+    position:sticky;
+    top:0;
+    height:100vh;
+    padding:48px 36px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    border-right:1px solid var(--line-soft);
+  }
+
+  .sidebar-top .name{
+    font-size:22px;
+    line-height:1.3;
+  }
+  .sidebar-top .role{
+    margin-top:6px;
+    font-size:14px;
+    color:var(--amber);
+    font-family:'IBM Plex Mono', monospace;
+  }
+
+  .sidebar-nav{
+    margin-top:56px;
+  }
+  .sidebar-nav li{ margin-bottom:14px; }
+  .sidebar-nav a{
+    font-size:14px;
+    color:var(--text-dim);
+    transition:color .15s ease;
+    position:relative;
+    padding-left:16px;
+  }
+  .sidebar-nav a::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:8px;
+    width:6px;
+    height:1px;
+    background:var(--text-faint);
+    transition:width .15s ease, background .15s ease;
+  }
+  .sidebar-nav a:hover, .sidebar-nav a.active{ color:var(--text); }
+  .sidebar-nav a:hover::before, .sidebar-nav a.active::before{
+    width:10px;
+    background:var(--amber);
+  }
+
+  .sidebar-contact{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:40px;
+  }
+  .sidebar-contact a{
+    font-size:13px;
+    color:var(--text-dim);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .sidebar-contact a:hover{ color:var(--amber); }
+  .sidebar-contact svg{ width:14px; height:14px; flex-shrink:0; opacity:.85; }
+
+  .sidebar-bottom{
+    font-size:12px;
+    color:var(--text-faint);
+    font-family:'IBM Plex Mono', monospace;
+  }
+
+  /* mobile top bar */
+  .topbar{ display:none; }
+
+  /* ---------- content ---------- */
+  .content{
+    flex:1;
+    min-width:0;
+  }
+  .section{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:96px 56px;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .section:last-child{ border-bottom:none; }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:36px;
+  }
+  .section-head .idx{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--text-faint);
+  }
+  .section-head h2{ font-size:26px; }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding-top:120px;
+    padding-bottom:80px;
+  }
+  .hero-kicker{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--teal);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .hero-kicker .dot{
+    width:7px; height:7px;
+    border-radius:50%;
+    background:var(--teal);
+    display:inline-block;
+  }
+  .hero h1{
+    font-size:44px;
+    line-height:1.15;
+    margin-top:18px;
+    max-width:11ch;
+  }
+  .hero .statement{
+    margin-top:24px;
+    max-width:58ch;
+    font-size:17px;
+    color:var(--text-dim);
+  }
+
+  .stack-strip{
+    margin-top:32px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .chip{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    padding:6px 11px;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    color:var(--text-dim);
+    background:var(--ink-panel);
+  }
+
+  .hero-cta{
+    margin-top:40px;
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:14px;
+    font-weight:500;
+    padding:12px 20px;
+    border-radius:var(--radius);
+    border:1px solid var(--line);
+    display:inline-block;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .btn-primary{
+    background:var(--amber);
+    color:#14181A;
+    border-color:var(--amber);
+  }
+  .btn-primary:hover{ background:#dcae63; }
+  .btn-ghost{ color:var(--text); }
+  .btn-ghost:hover{ border-color:var(--text-dim); }
+
+  /* ---------- about ---------- */
+  .about-text{
+    max-width:62ch;
+    color:var(--text-dim);
+    font-size:16px;
+  }
+  .about-text p + p{ margin-top:16px; }
+  .about-text strong{ color:var(--text); font-weight:500; }
+
+  /* ---------- expertise ---------- */
+  .expertise-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:1px;
+    background:var(--line-soft);
+    border:1px solid var(--line-soft);
+  }
+  .expertise-cell{
+    background:var(--ink);
+    padding:22px 24px;
+  }
+  .expertise-cell h3{
+    font-size:14px;
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--teal);
+    font-weight:500;
+    margin-bottom:12px;
+  }
+  .expertise-cell ul{ display:flex; flex-wrap:wrap; gap:7px; }
+  .expertise-cell li{
+    font-size:13px;
+    color:var(--text-dim);
+    padding:4px 9px;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+  }
+  .expertise-cell li.learning{
+    color:var(--text-faint);
+    border-style:dashed;
+  }
+  .expertise-note{
+    margin-top:16px;
+    font-size:13px;
+    color:var(--text-faint);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .swatch{ width:9px; height:9px; border:1px dashed var(--text-faint); display:inline-block; flex-shrink:0; }
+
+  /* ---------- experience timeline ---------- */
+  .timeline{
+    position:relative;
+    padding-left:28px;
+  }
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:4px; top:6px; bottom:6px;
+    width:1px;
+    background:var(--line);
+  }
+  .tl-item{
+    position:relative;
+    padding-bottom:44px;
+  }
+  .tl-item:last-child{ padding-bottom:0; }
+  .tl-item::before{
+    content:"";
+    position:absolute;
+    left:-28px; top:6px;
+    width:9px; height:9px;
+    border-radius:50%;
+    background:var(--ink);
+    border:2px solid var(--amber);
+  }
+  .tl-date{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--text-faint);
+  }
+  .tl-role{
+    font-size:18px;
+    margin-top:6px;
+  }
+  .tl-org{
+    font-size:14px;
+    color:var(--teal);
+    margin-top:2px;
+  }
+  .tl-desc{
+    margin-top:12px;
+    color:var(--text-dim);
+    font-size:15px;
+    max-width:60ch;
+  }
+  .tl-desc ul{ margin-top:8px; }
+  .tl-desc li{
+    position:relative;
+    padding-left:16px;
+    margin-bottom:7px;
+  }
+  .tl-desc li::before{
+    content:"–";
+    position:absolute;
+    left:0;
+    color:var(--text-faint);
+  }
+
+  /* ---------- projects ---------- */
+  .project{
+    border:1px solid var(--line);
+    background:var(--ink-panel);
+    margin-bottom:20px;
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .project:last-child{ margin-bottom:0; }
+  .project-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 20px;
+    border-bottom:1px solid var(--line);
+    cursor:pointer;
+    background:var(--ink-panel-2);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .project-head-left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .project-dots{ display:flex; gap:5px; }
+  .project-dots span{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--line);
+  }
+  .project-name{
+    font-size:16px;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+  }
+  .project-tagline{
+    font-size:12.5px;
+    color:var(--text-faint);
+    font-family:'IBM Plex Mono', monospace;
+    display:none;
+  }
+  .project-toggle{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--text-faint);
+    transition:transform .2s ease;
+    flex-shrink:0;
+  }
+  .project.open .project-toggle{ transform:rotate(45deg); }
+
+  .project-body{
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows .25s ease;
+  }
+  .project.open .project-body{ grid-template-rows:1fr; }
+  .project-body-inner{
+    overflow:hidden;
+  }
+  .project-body-content{
+    padding:22px 20px 26px;
+  }
+  .project-row{ margin-bottom:16px; }
+  .project-row:last-child{ margin-bottom:0; }
+  .project-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:var(--text-faint);
+    margin-bottom:6px;
+  }
+  .project-overview{
+    color:var(--text-dim);
+    font-size:15px;
+    max-width:60ch;
+  }
+  .project-tech{ display:flex; flex-wrap:wrap; gap:7px; }
+  .project-tech span{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--text-dim);
+    padding:3px 9px;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+  }
+  .project-notes{ color:var(--text-dim); font-size:15px; max-width:60ch; }
+  .project-notes li{ position:relative; padding-left:16px; margin-bottom:7px; }
+  .project-notes li::before{ content:"–"; position:absolute; left:0; color:var(--text-faint); }
+
+  /* ---------- capabilities / diagrams ---------- */
+  .diagram-block{ margin-bottom:56px; }
+  .diagram-block:last-child{ margin-bottom:0; }
+  .diagram-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--teal);
+    margin-bottom:14px;
+  }
+  .diagram-caption{
+    margin-top:14px;
+    font-size:14px;
+    color:var(--text-dim);
+    max-width:56ch;
+  }
+  .diagram-wrap{
+    border:1px solid var(--line);
+    background:var(--ink-panel);
+    padding:28px 20px;
+    border-radius:var(--radius);
+    overflow-x:auto;
+  }
+  .diagram-wrap svg{ display:block; margin:0 auto; max-width:100%; height:auto; }
+
+  /* ---------- education ---------- */
+  .edu-item{ margin-bottom:32px; }
+  .edu-item:last-child{ margin-bottom:0; }
+  .edu-degree{ font-size:17px; }
+  .edu-org{ font-size:14px; color:var(--teal); margin-top:3px; }
+  .edu-date{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--text-faint); margin-top:3px; }
+  .edu-detail{ margin-top:10px; color:var(--text-dim); font-size:14.5px; max-width:58ch; }
+
+  .lang-row{ display:flex; gap:40px; margin-top:32px; padding-top:32px; border-top:1px solid var(--line-soft); }
+  .lang-item .lang-name{ font-size:14px; }
+  .lang-item .lang-level{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--text-faint); margin-top:4px; }
+
+  /* ---------- contact ---------- */
+  .contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  .contact-card{
+    border:1px solid var(--line);
+    background:var(--ink-panel);
+    padding:20px;
+    border-radius:var(--radius);
+    transition:border-color .15s ease;
+  }
+  .contact-card:hover{ border-color:var(--amber-dim); }
+  .contact-card-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:var(--text-faint);
+    margin-bottom:8px;
+  }
+  .contact-card-value{ font-size:15px; word-break:break-word; }
+
+  footer{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:32px 56px 56px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--text-faint);
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 860px){
+    .shell{ flex-direction:column; }
+    .sidebar{ display:none; }
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      position:sticky;
+      top:0;
+      z-index:20;
+      background:var(--ink);
+      border-bottom:1px solid var(--line-soft);
+      padding:16px 20px;
+    }
+    .topbar .name{ font-size:16px; }
+    .topbar .role{ font-size:11px; color:var(--amber); font-family:'IBM Plex Mono', monospace; margin-top:2px; }
+    .topbar-menu-btn{
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:8px 10px;
+      font-family:'IBM Plex Mono', monospace;
+      font-size:12px;
+      color:var(--text-dim);
+      background:none;
+    }
+    .mobile-nav{
+      display:none;
+      flex-direction:column;
+      gap:2px;
+      background:var(--ink-panel);
+      border-bottom:1px solid var(--line-soft);
+      padding:8px 20px 16px;
+    }
+    .mobile-nav.open{ display:flex; }
+    .mobile-nav a{
+      padding:10px 0;
+      font-size:14px;
+      color:var(--text-dim);
+      border-bottom:1px solid var(--line-soft);
+    }
+    .mobile-nav a:last-child{ border-bottom:none; }
+
+    .section{ padding:64px 24px; }
+    .hero{ padding-top:56px; }
+    .hero h1{ font-size:32px; max-width:none; }
+    .expertise-grid{ grid-template-columns:1fr; }
+    .contact-grid{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="name" style="font-family:'Space Grotesk',sans-serif;">Manar Alaa</div>
+    <div class="role">Software Engineer — Backend</div>
+  </div>
+  <button class="topbar-menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mobileNav">Menu</button>
+</div>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="#about">About</a>
+  <a href="#expertise">Expertise</a>
+  <a href="#experience">Experience</a>
+  <a href="#projects">Projects</a>
+  <a href="#capabilities">Capabilities</a>
+  <a href="#education">Education</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<div class="shell">
+
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="name">Manar Alaa</div>
+      <div class="role">Software Engineer — Backend</div>
+
+      <ul class="sidebar-nav" id="sideNav">
+        <li><a href="#about">About</a></li>
+        <li><a href="#expertise">Expertise</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#capabilities">Capabilities</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <div class="sidebar-contact">
+        <a href="mailto:manaralaa198@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 6.5l9 6.5 9-6.5"/></svg>
+          manaralaa198@gmail.com
+        </a>
+        <a href="https://www.linkedin.com/in/manar-abdelfatah/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 10v7M7 7v.01M12 17v-4.5a2 2 0 0 1 4 0V17M12 10v7"/></svg>
+          linkedin.com/in/manar-abdelfatah
+        </a>
+        <a href="https://github.com/ManarAlaa" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.6 2.8 5.5 3.1 5.5 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4.1 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+          github.com/ManarAlaa
+        </a>
+      </div>
+    </div>
+
+    <div class="sidebar-bottom">Mansoura, Egypt</div>
+  </aside>
+
+  <main class="content">
+
+    <section class="section hero" id="top">
+      <div class="hero-kicker"><span class="dot"></span>Available for backend engineering roles</div>
+      <h1>Software Engineer, Backend Development</h1>
+      <p class="statement">Nearly three years of experience building scalable backend systems and RESTful APIs with Node.js, Express, TypeScript, and MongoDB — with a focus on real-time communication, third-party integrations, authentication, and production-grade backend architecture.</p>
+
+      <div class="stack-strip">
+        <span class="chip">Node.js</span>
+        <span class="chip">Express.js</span>
+        <span class="chip">TypeScript</span>
+        <span class="chip">MongoDB / Mongoose</span>
+        <span class="chip">WebSockets</span>
+        <span class="chip">JWT Auth</span>
+      </div>
+
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View projects</a>
+        <a href="#contact" class="btn btn-ghost">Contact me</a>
+        <a href="Manar-Alaa-CV.pdf" class="btn btn-ghost" download>Download CV</a>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="section-head"><span class="idx mono">01</span><h2>About</h2></div>
+      <div class="about-text">
+        <p>I build backend systems — APIs, real-time services, and the business logic that sits behind them. Most of my production work has been on <strong>service and operations platforms</strong>: designing data models, structuring authentication and authorization, integrating third-party and real-time data sources, and keeping systems reliable as requirements change.</p>
+        <p>I'm drawn to problems where data has to move correctly and on time between systems — a WebSocket connection that can't drop a bid, a cron job that has to run exactly once, an API that an external partner is depending on. Getting that right, over building something that just looks finished, is what I care about.</p>
+        <p>Alongside production work, I'm developing depth in <strong>NestJS, system design, automated testing, and containerized deployment</strong> — the layer above individual services, where backend architecture decisions actually get made.</p>
+      </div>
+    </section>
+
+    <section class="section" id="expertise">
+      <div class="section-head"><span class="idx mono">02</span><h2>Technical Expertise</h2></div>
+
+      <div class="expertise-grid">
+        <div class="expertise-cell">
+          <h3>Backend</h3>
+          <ul>
+            <li>Node.js</li><li>Express.js</li><li>TypeScript</li><li>JavaScript</li><li>REST APIs</li>
+          </ul>
+        </div>
+        <div class="expertise-cell">
+          <h3>Databases</h3>
+          <ul>
+            <li>MongoDB</li><li>Mongoose</li><li>Database design</li><li>MySQL</li>
+          </ul>
+        </div>
+        <div class="expertise-cell">
+          <h3>Real-Time</h3>
+          <ul>
+            <li>WebSockets</li><li>Socket.IO</li><li>TCP sockets</li>
+          </ul>
+        </div>
+        <div class="expertise-cell">
+          <h3>Architecture &amp; Engineering</h3>
+          <ul>
+            <li>OOP</li><li>SOLID principles</li><li>Design patterns</li><li>API architecture</li>
+            <li class="learning">System design</li>
+          </ul>
+        </div>
+        <div class="expertise-cell">
+          <h3>DevOps &amp; Cloud</h3>
+          <ul>
+            <li>Git / GitLab</li>
+            <li class="learning">Docker</li>
+            <li class="learning">CI/CD</li>
+          </ul>
+        </div>
+        <div class="expertise-cell">
+          <h3>Integrations</h3>
+          <ul>
+            <li>JWT authentication</li><li>Passport.js</li><li>Third-party APIs</li><li>OpenAI API</li><li>Market-data APIs</li><li>Agora</li>
+          </ul>
+        </div>
+      </div>
+      <div class="expertise-note"><span class="swatch"></span>Dashed = currently building depth here, not yet production experience</div>
+    </section>
+
+    <section class="section" id="experience">
+      <div class="section-head"><span class="idx mono">03</span><h2>Experience</h2></div>
+
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-date">Apr 2024 — Jul 2026</div>
+          <div class="tl-role">Node.js Developer</div>
+          <div class="tl-org">AAIT Company</div>
+          <div class="tl-desc">
+            <p>Designed, developed, and maintained backend services in Node.js and MongoDB across several production platforms, working closely with cross-functional teams on system architecture, reliability, and maintainability. Work spanned:</p>
+            <ul>
+              <li>Service and operations platforms letting companies and delegates manage service requests and operational workflows — API architecture, business logic, and database design.</li>
+              <li>Two auction systems supporting different bidding models, with real-time bidding and automated cron-driven workflows.</li>
+              <li>A real-time capital market data system integrated with external market-data providers, handling delayed-vs-real-time access logic over WebSockets and high-frequency data.</li>
+              <li>A medical examination platform with dynamic exam types, real-time exam sessions, performance analytics, and OpenAI-assisted performance analysis.</li>
+            </ul>
+            <p>Also stayed current on backend best practices and shared knowledge with the team, mentoring peers where useful.</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-date">Jan 2024 — Apr 2024</div>
+          <div class="tl-role">Node.js Developer</div>
+          <div class="tl-org">CodeClick Company</div>
+          <div class="tl-desc">
+            <p>Worked on a comprehensive ERP system tailored for multi-departmental operations, focused on backend logic to support organizational coordination.</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-date">Oct 2023 — Dec 2023</div>
+          <div class="tl-role">Node.js Developer</div>
+          <div class="tl-org">Rmoz Company</div>
+          <div class="tl-desc">
+            <p>Contributed to Hafzny, a Quran study application, building session management to support structured, seamless interaction between students and teachers.</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-date">Jul 2023 — Sep 2023</div>
+          <div class="tl-role">Freelance Backend Developer</div>
+          <div class="tl-org">Independent</div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="section-head"><span class="idx mono">04</span><h2>Selected Projects</h2></div>
+
+      <!-- My Engineer -->
+      <div class="project">
+        <div class="project-head" data-toggle>
+          <div class="project-head-left">
+            <span class="project-dots"><span></span><span></span><span></span></span>
+            <span class="project-name">My Engineer</span>
+          </div>
+          <span class="project-toggle mono">+</span>
+        </div>
+        <div class="project-body">
+          <div class="project-body-inner">
+            <div class="project-body-content">
+              <div class="project-row">
+                <div class="project-label">OVERVIEW</div>
+                <p class="project-overview">A backend-driven service order platform built around a dynamic service order form — not a marketplace or bidding system. The form adapts to departments and sub-departments, and providers respond with pricing and timelines through real-time communication and order management.</p>
+              </div>
+              <div class="project-row">
+                <div class="project-label">ROLE</div>
+                <p class="project-overview">Backend development.</p>
+              </div>
+              <div class="project-row">
+                <div class="project-label">TECH</div>
+                <div class="project-tech"><span>Node.js</span><span>Express.js</span><span>MongoDB</span><span>Socket.IO</span></div>
+              </div>
+              <div class="project-row">
+                <div class="project-label">ENGINEERING NOTES</div>
+                <ul class="project-notes">
+                  <li>Dynamic form structure that changes shape per department and sub-department, rather than a fixed schema.</li>
+                  <li>Order and pricing workflow connecting requesters and providers, with real-time updates as offers move.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MedExcellence -->
+      <div class="project">
+        <div class="project-head" data-toggle>
+          <div class="project-head-left">
+            <span class="project-dots"><span></span><span></span><span></span></span>
+            <span class="project-name">MedExcellence</span>
+          </div>
+          <span class="project-toggle mono">+</span>
+        </div>
+        <div class="project-body">
+          <div class="project-body-inner">
+            <div class="project-body-content">
+              <div class="project-row">
+                <div class="project-label">OVERVIEW</div>
+                <p class="project-overview">A medical education and examination platform handling dynamic exam creation, multiple question types, real-time exam sessions, exam history, and performance analytics, with AI-assisted analysis of results.</p>
+              </div>
+              <div class="project-row">
+                <div class="project-label">ROLE</div>
+                <p class="project-overview">Backend development.</p>
+              </div>
+              <div class="project-row">
+                <div class="project-label">TECH</div>
+                <div class="project-tech"><span>Node.js</span><span>Express.js</span><span>MongoDB</span><span>Mongoose</span><span>EJS</span><span>Socket.IO</span><span>OpenAI API</span><span>i18n</span></div>
+              </div>
+              <div class="project-row">
+                <div class="project-label">ENGINEERING NOTES</div>
+                <ul class="project-notes">
+                  <li>Exam engine supporting multiple question types (MCQ, boolean) with dynamic exam creation rather than fixed templates.</li>
+                  <li>Real-time exam sessions with history tracking, plus an OpenAI integration for automated performance analysis.</li>
+                  <li>Arabic/English support throughout, with an administrative dashboard for exam management.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABR -->
+      <div class="project">
+        <div class="project-head" data-toggle>
+          <div class="project-head-left">
+            <span class="project-dots"><span></span><span></span><span></span></span>
+            <span class="project-name">ABR</span>
+          </div>
+          <span class="project-toggle mono">+</span>
+        </div>
+        <div class="project-body">
+          <div class="project-body-inner">
+            <div class="project-body-content">
+              <div class="project-row">
+                <div class="project-label">OVERVIEW</div>
+                <p class="project-overview">A real-time investor and financial market service, integrated with the Capital Market Authority and external market-data providers (DirectFN / Mubasher, TDWL), with role-based access and subscription-tiered data packages.</p>
+              </div>
+              <div class="project-row">
+                <div class="project-label">ROLE</div>
+                <p class="project-overview">Backend development.</p>
+              </div>
+              <div class="project-row">
+                <div class="project-label">TECH</div>
+                <div class="project-tech"><span>Node.js</span><span>MongoDB</span><span>WebSockets</span><span>DirectFN / Mubasher API</span><span>TDWL market data</span></div>
+              </div>
+              <div class="project-row">
+                <div class="project-label">ENGINEERING NOTES</div>
+                <ul class="project-notes">
+                  <li>Real-time vs. delayed price logic gated by subscription tier and buying power — the same feed served differently depending on access level.</li>
+                  <li>Market depth and high-frequency price updates pushed over WebSockets rather than polled.</li>
+                  <li>Role-based access control layered on top of the subscription model.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Auctions -->
+      <div class="project">
+        <div class="project-head" data-toggle>
+          <div class="project-head-left">
+            <span class="project-dots"><span></span><span></span><span></span></span>
+            <span class="project-name">Auction Systems</span>
+          </div>
+          <span class="project-toggle mono">+</span>
+        </div>
+        <div class="project-body">
+          <div class="project-body-inner">
+            <div class="project-body-content">
+              <div class="project-row">
+                <div class="project-label">OVERVIEW</div>
+                <p class="project-overview">Backend services for two multi-category auction platforms (vehicles, equipment, jewelry, and more), supporting different bidding models with real-time bidding.</p>
+              </div>
+              <div class="project-row">
+                <div class="project-label">ROLE</div>
+                <p class="project-overview">Backend development.</p>
+              </div>
+              <div class="project-row">
+                <div class="project-label">TECH</div>
+                <div class="project-tech"><span>Node.js</span><span>Express.js</span><span>MongoDB</span><span>Socket.IO</span></div>
+              </div>
+              <div class="project-row">
+                <div class="project-label">ENGINEERING NOTES</div>
+                <ul class="project-notes">
+                  <li>Multiple bidding mechanisms modeled as distinct business rules rather than one generic auction flow.</li>
+                  <li>Live bid updates broadcast in real time, with automated cron workflows handling auction timing and closure.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HelpMe -->
+      <div class="project">
+        <div class="project-head" data-toggle>
+          <div class="project-head-left">
+            <span class="project-dots"><span></span><span></span><span></span></span>
+            <span class="project-name">HelpMe</span>
+          </div>
+          <span class="project-toggle mono">+</span>
+        </div>
+        <div class="project-body">
+          <div class="project-body-inner">
+            <div class="project-body-content">
+              <div class="project-row">
+                <div class="project-label">OVERVIEW</div>
+                <p class="project-overview">A multi-platform service mediation app connecting users with service providers — dynamic service requests, real-time communication, offer management, and role-based dashboards for clients, companies, and delegates.</p>
+              </div>
+              <div class="project-row">
+                <div class="project-label">ROLE</div>
+                <p class="project-overview">Backend development.</p>
+              </div>
+              <div class="project-row">
+                <div class="project-label">TECH</div>
+                <div class="project-tech"><span>Node.js</span><span>Express.js</span><span>MongoDB</span><span>Socket.IO</span></div>
+              </div>
+              <div class="project-row">
+                <div class="project-label">ENGINEERING NOTES</div>
+                <ul class="project-notes">
+                  <li>Three-sided role model (client, company, delegate), each with its own dashboard and permissions.</li>
+                  <li>Offer management workflow layered on top of dynamic, per-request service structures.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Haki -->
+      <div class="project">
+        <div class="project-head" data-toggle>
+          <div class="project-head-left">
+            <span class="project-dots"><span></span><span></span><span></span></span>
+            <span class="project-name">Haki — Parental Smartwatch Monitoring</span>
+          </div>
+          <span class="project-toggle mono">+</span>
+        </div>
+        <div class="project-body">
+          <div class="project-body-inner">
+            <div class="project-body-content">
+              <div class="project-row">
+                <div class="project-label">OVERVIEW</div>
+                <p class="project-overview">Backend platform for a kids' GPS smartwatch service — real-time child location tracking, geofenced safe zones, remote device control, and a subscription-based monetization model with feature gating.</p>
+              </div>
+              <div class="project-row">
+                <div class="project-label">ROLE</div>
+                <p class="project-overview">Backend development.</p>
+              </div>
+              <div class="project-row">
+                <div class="project-label">TECH</div>
+                <div class="project-tech"><span>Node.js</span><span>Express</span><span>MongoDB</span><span>Socket.IO</span><span>TCP</span><span>Agora</span></div>
+              </div>
+              <div class="project-row">
+                <div class="project-label">ENGINEERING NOTES</div>
+                <ul class="project-notes">
+                  <li>Custom TCP server built to communicate directly with smartwatch hardware — outside the usual HTTP/WebSocket request path.</li>
+                  <li>Feature gating tied to subscription tier, controlling which device capabilities a given account can access.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="section" id="capabilities">
+      <div class="section-head"><span class="idx mono">05</span><h2>Engineering Capabilities</h2></div>
+
+      <div class="diagram-block">
+        <div class="diagram-label">// authenticated request lifecycle</div>
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 760 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram showing a client request passing through JWT verification middleware, into business logic, to the database, and back">
+            <defs>
+              <marker id="arrow1" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 z" fill="#6C767B"/>
+              </marker>
+            </defs>
+            <style>
+              .box{ fill:#1C2226; stroke:#2B3236; }
+              .boxlabel{ font-family:'IBM Plex Mono',monospace; font-size:12px; fill:#ECEDEE; }
+              .boxsub{ font-family:'IBM Plex Mono',monospace; font-size:10px; fill:#9BA5AA; }
+              .flowline{ stroke:#6C767B; stroke-width:1; fill:none; marker-end:url(#arrow1); }
+              .accentbox{ fill:#1C2226; stroke:#C99A4A; }
+            </style>
+            <rect x="10" y="50" width="110" height="56" rx="3" class="box"/>
+            <text x="65" y="74" text-anchor="middle" class="boxlabel">Client</text>
+            <text x="65" y="90" text-anchor="middle" class="boxsub">request + JWT</text>
+
+            <path class="flowline" d="M120,78 L172,78"/>
+
+            <rect x="175" y="50" width="140" height="56" rx="3" class="accentbox"/>
+            <text x="245" y="70" text-anchor="middle" class="boxlabel">Auth middleware</text>
+            <text x="245" y="86" text-anchor="middle" class="boxsub">verify token</text>
+
+            <path class="flowline" d="M315,78 L367,78"/>
+
+            <rect x="370" y="50" width="140" height="56" rx="3" class="box"/>
+            <text x="440" y="70" text-anchor="middle" class="boxlabel">Business logic</text>
+            <text x="440" y="86" text-anchor="middle" class="boxsub">controller / service</text>
+
+            <path class="flowline" d="M510,78 L562,78"/>
+
+            <rect x="565" y="50" width="120" height="56" rx="3" class="box"/>
+            <text x="625" y="70" text-anchor="middle" class="boxlabel">MongoDB</text>
+            <text x="625" y="86" text-anchor="middle" class="boxsub">read / write</text>
+
+            <path class="flowline" d="M625,106 C625,140 245,140 245,106" />
+            <text x="435" y="152" text-anchor="middle" class="boxsub">response serialized back to client</text>
+          </svg>
+        </div>
+        <p class="diagram-caption">The pattern behind most of my API work — a verification layer that never touches business logic directly, service code that stays framework-agnostic, and a data layer it can be tested against independently.</p>
+      </div>
+
+      <div class="diagram-block">
+        <div class="diagram-label">// real-time broadcast (bidding / market data / tracking)</div>
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram showing an external source or event pushed through a WebSocket server and broadcast to multiple connected clients">
+            <defs>
+              <marker id="arrow2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 z" fill="#6C767B"/>
+              </marker>
+            </defs>
+            <style>
+              .box2{ fill:#1C2226; stroke:#2B3236; }
+              .box2label{ font-family:'IBM Plex Mono',monospace; font-size:12px; fill:#ECEDEE; }
+              .box2sub{ font-family:'IBM Plex Mono',monospace; font-size:10px; fill:#9BA5AA; }
+              .flowline2{ stroke:#6C767B; stroke-width:1; fill:none; marker-end:url(#arrow2); }
+              .tealbox{ fill:#1C2226; stroke:#55A8A2; }
+            </style>
+
+            <rect x="10" y="75" width="150" height="50" rx="3" class="box2"/>
+            <text x="85" y="96" text-anchor="middle" class="box2label">Event source</text>
+            <text x="85" y="111" text-anchor="middle" class="box2sub">bid / market feed / device</text>
+
+            <path class="flowline2" d="M160,100 L212,100"/>
+
+            <rect x="215" y="70" width="160" height="60" rx="3" class="tealbox"/>
+            <text x="295" y="94" text-anchor="middle" class="box2label">WebSocket server</text>
+            <text x="295" y="110" text-anchor="middle" class="box2sub">Socket.IO / TCP</text>
+
+            <path class="flowline2" d="M375,90 C420,60 460,50 500,50"/>
+            <path class="flowline2" d="M375,100 L500,100"/>
+            <path class="flowline2" d="M375,110 C420,140 460,150 500,150"/>
+
+            <rect x="500" y="30" width="120" height="42" rx="3" class="box2"/>
+            <text x="560" y="56" text-anchor="middle" class="box2label">Client A</text>
+            <rect x="500" y="80" width="120" height="42" rx="3" class="box2"/>
+            <text x="560" y="106" text-anchor="middle" class="box2label">Client B</text>
+            <rect x="500" y="130" width="120" height="42" rx="3" class="box2"/>
+            <text x="560" y="156" text-anchor="middle" class="box2label">Client N</text>
+          </svg>
+        </div>
+        <p class="diagram-caption">Used across the auction, market-data, and smartwatch-tracking systems — one event on the source side needs to reach every relevant connected client without drift or duplicate delivery.</p>
+      </div>
+
+    </section>
+
+    <section class="section" id="education">
+      <div class="section-head"><span class="idx mono">06</span><h2>Education</h2></div>
+
+      <div class="edu-item">
+        <div class="edu-degree">B.Sc., Computer and Information Science</div>
+        <div class="edu-org">Mansoura University — Medical Informatics Department · GPA 3.33 (Very Good)</div>
+        <div class="edu-date">2018 — 2022</div>
+        <div class="edu-detail">Graduation project: Brain Speller — an EEG-based communication system for paralyzed patients (Grade: A+).</div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-degree">9-Month Professional Diploma, Open Source Track</div>
+        <div class="edu-org">Information Technology Institute (ITI) — Mansoura Branch</div>
+        <div class="edu-date">Oct 2022 — Jul 2023</div>
+        <div class="edu-detail">Practical, project-based training across multiple languages and frameworks, with exposure to both backend and frontend development.</div>
+      </div>
+
+      <div class="lang-row">
+        <div class="lang-item">
+          <div class="lang-name">Arabic</div>
+          <div class="lang-level">Native</div>
+        </div>
+        <div class="lang-item">
+          <div class="lang-name">English</div>
+          <div class="lang-level">Very good</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="section-head"><span class="idx mono">07</span><h2>Contact</h2></div>
+      <p class="about-text" style="margin-bottom:28px;">Open to Software Engineer and Node.js Backend Developer roles, including remote and international opportunities.</p>
+      <div class="contact-grid">
+        <a class="contact-card" href="mailto:manaralaa198@gmail.com">
+          <div class="contact-card-label">EMAIL</div>
+          <div class="contact-card-value">manaralaa198@gmail.com</div>
+        </a>
+        <a class="contact-card" href="tel:+201010832821">
+          <div class="contact-card-label">PHONE</div>
+          <div class="contact-card-value">+20 101 083 2821</div>
+        </a>
+        <a class="contact-card" href="https://www.linkedin.com/in/manar-abdelfatah/" target="_blank" rel="noopener">
+          <div class="contact-card-label">LINKEDIN</div>
+          <div class="contact-card-value">linkedin.com/in/manar-abdelfatah</div>
+        </a>
+        <a class="contact-card" href="https://github.com/ManarAlaa" target="_blank" rel="noopener">
+          <div class="contact-card-label">GITHUB</div>
+          <div class="contact-card-value">github.com/ManarAlaa</div>
+        </a>
+      </div>
+    </section>
+
+    <footer>Manar Alaa — Software Engineer, Backend · built with plain HTML/CSS/JS</footer>
+
+  </main>
+</div>
+
+<script>
+  // mobile menu toggle
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileNav = document.getElementById('mobileNav');
+  if (menuBtn) {
+    menuBtn.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', isOpen);
+    });
+    mobileNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        mobileNav.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // project accordion
+  document.querySelectorAll('[data-toggle]').forEach(head => {
+    head.addEventListener('click', () => {
+      head.parentElement.classList.toggle('open');
+    });
+    head.setAttribute('tabindex', '0');
+    head.setAttribute('role', 'button');
+    head.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        head.click();
+      }
+    });
+  });
+
+  // active nav link on scroll
+  const sections = document.querySelectorAll('.section[id]');
+  const navLinks = document.querySelectorAll('.sidebar-nav a');
+  const setActive = () => {
+    let current = '';
+    sections.forEach(sec => {
+      const rect = sec.getBoundingClientRect();
+      if (rect.top <= 140) current = sec.id;
+    });
+    navLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+    });
+  };
+  document.addEventListener('scroll', setActive, { passive: true });
+  setActive();
+
+</script>
+
+</body>
+</html>
