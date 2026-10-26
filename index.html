@@ -146,7 +146,7 @@
 
   /* mobile top bar */
   .topbar{ display:none; }
-
+ .mobile-nav{ display:none; }
   /* ---------- content ---------- */
   .content{
     flex:1;
@@ -535,20 +535,38 @@
       color:var(--text-dim);
       background:none;
     }
-    .mobile-nav{
+        .mobile-nav{
       display:none;
       flex-direction:column;
-      gap:2px;
       background:var(--ink-panel);
-      border-bottom:1px solid var(--line-soft);
-      padding:8px 20px 16px;
+      border-bottom:1px solid var(--line);
+      padding:6px 20px 10px;
     }
     .mobile-nav.open{ display:flex; }
     .mobile-nav a{
-      padding:10px 0;
-      font-size:14px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:14px 0;
+      font-family:'IBM Plex Mono', monospace;
+      font-size:13px;
       color:var(--text-dim);
       border-bottom:1px solid var(--line-soft);
+      transition:color .15s ease;
+    }
+    .mobile-nav a::before{
+      content:"";
+      width:6px;
+      height:1px;
+      background:var(--text-faint);
+      transition:width .15s ease, background .15s ease;
+    }
+    .mobile-nav a:hover,
+    .mobile-nav a:active{ color:var(--text); }
+    .mobile-nav a:hover::before,
+    .mobile-nav a:active::before{
+      width:12px;
+      background:var(--amber);
     }
     .mobile-nav a:last-child{ border-bottom:none; }
 
